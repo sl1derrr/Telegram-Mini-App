@@ -1,0 +1,39 @@
+1. SSH-подключение
+	* cd /etc/ssh
+	* nano sshd_config
+		* PermitRootLogin yes
+		* ufw allow ssh
+
+2. Обновление пакетов
+	* apt update && apt upgrade -y
+
+3. Установка nginx
+	* apt install nginx -y
+	* systemctl start nginx
+	* systemctl enable nginx
+
+4. Создать A-запись и @-запись
+	* A-запись: fitnessbusinesstg.ru → 91.184.240.224
+	* www.fitnessbusinesstg.ru → 91.184.240.224
+5. Создать конфиг nginx для домена
+	* server {
+    		listen 80;
+    		server_name fitnessbusinesstg.ru www.fitnessbusinesstg.ru;
+
+    		root /var/www/fitnessbusinesstg.ru;
+    		index index.html;
+
+    		location / {
+        		try_files $uri $uri/ =404;
+    		}
+	}
+
+6. Создать симлинк и проверка конфига
+	* ln -s /etc/nginx/sites-available/fitnessbusinesstg.ru /etc/nginx/sites-	  enabled/
+	* systemctl restart nginx
+
+7. Загрузка проекта
+	* Создать папку - mkdir -p /var/www/fitnessbusinesstg.ru
+	* Выгрузить репозиторий - git clone 	    https://github.com/Sl1derrr/Telegram-Mini-App.git /var/www/fitnessbusinesstg.ru
+	* Дать права - chown -R www-data:www-data /var/www/fitnessbusinesstg.ru
+8. 
